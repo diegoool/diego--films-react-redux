@@ -1,15 +1,17 @@
 import { connect } from 'react-redux'
-import { searchMovie } from '../modules/movies'
+import { searchMovie, clearMoviesState } from '../modules/movies'
 
 import Movies from '../components/Movies'
 
 const mapDispatchToProps = {
-  searchMovie
+  searchMovie,
+  clearMoviesState
 }
 
 const mapStateToProps = (state) => ({
   movies : state.movies.movies,
-  results : state.movies.results
+  results : state.movies.results,
+  loadingMovies : state.movies.loadingMovies
 })
 
 

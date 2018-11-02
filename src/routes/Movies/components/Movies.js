@@ -1,20 +1,23 @@
 import React from 'react'
 import FilmsImage from '../assets/Filmstext.png'
 import './Movies.scss'
+import MoviesList from './MoviesList'
 
 
 import PropTypes from 'prop-types'
 
-import { Col, Row, Button, Form, FormGroup, Label, Input, ListGroup, ListGroupItem } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Input } from 'reactstrap';
 
 class Movies extends React.Component {
 
   static propTypes = {
-    // Functions searchMovie
+    // Functions
     searchMovie: PropTypes.func.isRequired,
+    clearMoviesState: PropTypes.func.isRequired,
 
     movies: PropTypes.array,
-    results: PropTypes.string
+    results: PropTypes.number,
+    loadingMovies: PropTypes.bool
   }
 
   constructor (props) {
@@ -22,17 +25,21 @@ class Movies extends React.Component {
     this.onSearchMovie = this.onSearchMovie.bind(this)
   }
 
+  componentWillUnmount(){
+    this.props.clearMoviesState()
+  }
+
   onSearchMovie (event) {
     event.preventDefault()
     let movieText = event.currentTarget['movie-text'].value
     console.log(movieText);
-    this.props.searchMovie(movieText)
-    // .then(() => {
-    //   this.props.errorClear()
-    // })
-    // .catch(() => {
-    //   console.log('Catch')
-    // })
+    if(movieText === ''){
+      alert("Escribe pelicula a buscar");
+     return false;
+     }else{
+       this.props.searchMovie(movieText)
+       event.currentTarget['movie-text'].value = ""
+     }
   }
 
   render() {
@@ -60,22 +67,7 @@ class Movies extends React.Component {
       </Form>
       <Row>
         <Col md={12}>
-        {this.props.results !== null  &&
-        <div>
-          <div>
-          Total results:{this.props.results}
-          </div>
-          <div>
-          {this.props.movies.map(movie => {
-            return (
-              <div key={movie.trackId}>
-                {movie.trackName}
-              </div>
-            )}
-          )}
-          </div>
-        </div>
-        }
+        <MoviesList results={this.props.results} loadingMovies={this.props.loadingMovies} movies={this.props.movies}/>
         </Col>
       </Row>
     </div>
