@@ -49,12 +49,15 @@ export const searchMovie = (text) => {
     
     axios({
       method: 'GET',
-      url: `https://itunes.apple.com/search?term=${text}&media=movie&country=MX`,
+      //url: `https://itunes.apple.com/search?term=${text}&media=movie&country=MX`,
+      url: `https://cors-anywhere.herokuapp.com/https://tv-v2.api-fetch.website/movies/1?sort=last%20added&order=1&keywords=${text}`,
       headers: {
       }
     }).then((response) => {
-      let moviesDTO = response.data
-      dispatch(getMovies(moviesDTO))
+      // let moviesDTO = response.data
+      let moviesArray = response.data
+      console.log(moviesArray)
+      dispatch(getMovies(moviesArray))
       dispatch(offLoadingMovies())
     }).catch((error) => {
       console.log(error);
@@ -70,8 +73,8 @@ const ACTION_HANDLERS = {
   [GET_MOVIES]: (state, action) => {
     return {
       ...state,
-      movies: action.payload.results,
-      results: action.payload.resultCount
+      movies: action.payload
+      // ,      results: action.payload.resultCount
     }
   },
   [ON_LOADING_MOVIES]: (state, action) => {

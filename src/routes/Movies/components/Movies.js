@@ -65,11 +65,7 @@ class Movies extends React.Component {
           </Col>
         </Row>
       </Form>
-      <Row>
-        <Col md={12}>
-        <MoviesList results={this.props.results} loadingMovies={this.props.loadingMovies} movies={this.props.movies}/>
-        </Col>
-      </Row>
+      <MoviesList results={this.props.results} loadingMovies={this.props.loadingMovies} movies={this.props.movies}/>
     </div>
     )
   }
