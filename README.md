@@ -1,4 +1,4 @@
-# Diego React Redux
+# Diego Films - React Redux
 
 
 ## Project Structure
